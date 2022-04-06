@@ -1,0 +1,28 @@
+JSONObject[] auctions = new JSONObject[10000];
+        int i = 0;
+        String output;
+        while ((output = br.readLine()) != null) {
+            JSONObject obj = new JSONObject(output);
+            JSONArray arr = obj.getJSONArray("auctions");
+            for (int j = 0; j < arr.length(); j++) {
+                auctions[i] = arr.getJSONObject(j);
+                i++;
+            }
+        }
+
+
+        for (int j = 0; j < auctions.length; j++) {
+            if (auctions[j] != null) {
+                if (auctions[j].getBoolean("claimed") == true || auctions[j].getBoolean("bin") == false) {
+                    auctions[j] = null;
+                }
+            }
+        }
+
+        for (int j = 0; j < auctions.length; j++) {
+            if (auctions[j] != null) {
+                System.out.println(auctions[j].get("item_name") + " " + auctions[j].get("bin") + " "
+                        + auctions[j].get("starting_bid"));
+                System.out.println("/viewauction " + auctions[j].getString("uuid"));
+            }
+        }
